@@ -11,10 +11,15 @@ const fetchMovies = async (query, page = 1) => {
                 language: 'en-US'
             }
         });
-        return response.data;  // Return the full data (including the page and total_results)
+        
+        // Log the response data for debugging purposes
+        console.log("API Response:", response.data);
+        
+        return response.data;
     } catch (error) {
+        // Log the error to the console if something goes wrong
         console.error("Error fetching movies:", error);
-        return { results: [] };  // Return an empty array in case of error
+        return { results: [] };  // Return empty results if error occurs
     }
 };
 
