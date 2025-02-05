@@ -1,23 +1,21 @@
 // src/services/api.js
 import axios from 'axios';
 
+// Modify fetchMovies function to hit the backend API
 const fetchMovies = async (query, page = 1) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_MOVIE_DATABASE_API_URL}/search/movie`, {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/movies/search`, {
             params: {
-                api_key: process.env.REACT_APP_MOVIE_DATABASE_API_KEY,
                 query: query,
                 page: page,
-                language: 'en-US'
             }
         });
         
         // Log the response data for debugging purposes
         console.log("API Response:", response.data);
         
-        return response.data;
+        return response.data; // Return movie results from backend
     } catch (error) {
-        // Log the error to the console if something goes wrong
         console.error("Error fetching movies:", error);
         return { results: [] };  // Return empty results if error occurs
     }
