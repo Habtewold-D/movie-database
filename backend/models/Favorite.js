@@ -1,8 +1,7 @@
-// backend/models/Favorite.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./User');  // Import User model
-const Movie = require('./Movie');  // Import Movie model
+const User = require('./User');
+const Movie = require('./Movie');
 
 const Favorite = sequelize.define('Favorite', {
     user_id: {

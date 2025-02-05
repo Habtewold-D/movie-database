@@ -1,4 +1,3 @@
-// backend/routes/movieRoutes.js
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
@@ -25,13 +24,19 @@ router.get('/movies', async (req, res) => {
     }
 });
 
+// Search movies
 router.get('/search', async (req, res) => {
-    const query = req.query.query;  // Query parameter for movie search
+    const query = req.query.query;
+
+    if (!query) {
+        return res.status(400).json({ message: 'Search query is required' });
+    }
+
     try {
-        const response = await axios.get(`${process.env.MOVIE_DATABASE_API_URL}/search/movie`, {
+        const response = await axios.get(`${MOVIE_API_URL}/search/movie`, {
             params: {
-                api_key: process.env.MOVIE_DATABASE_API_KEY,
-                query: query,
+                api_key: MOVIE_API_KEY,
+                query,
                 language: 'en-US',
                 page: 1,
             },
@@ -42,6 +47,5 @@ router.get('/search', async (req, res) => {
         res.status(500).json({ error: 'Failed to search movies' });
     }
 });
-
 
 module.exports = router;
