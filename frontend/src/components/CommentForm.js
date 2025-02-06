@@ -1,4 +1,3 @@
-// src/components/CommentForm.js
 import React, { useState } from 'react';
 
 const CommentForm = ({ onSubmit }) => {
@@ -6,16 +5,19 @@ const CommentForm = ({ onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(comment);
-        setComment('');
+        if (comment.trim()) {
+            onSubmit(comment);
+            setComment('');
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="comment-form">
             <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Add a comment..."
+                required
             />
             <button type="submit">Submit</button>
         </form>

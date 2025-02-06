@@ -1,85 +1,81 @@
-// src/pages/Home.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchPopularMovies, searchMovies } from '../services/api';
 import SearchBar from '../components/SearchBar';
-import { fetchMovies } from '../services/api';
+import MovieList from '../components/MovieList';
 import Pagination from '../components/Pagination';
 
 const Home = () => {
-    const [movies, setMovies] = useState([]); // State to hold the movie list
+    const [movies, setMovies] = useState([]); // All movies fetched
     const [currentPage, setCurrentPage] = useState(1); // Current page number
-    const [totalPages, setTotalPages] = useState(1); // Total number of pages
-    const [query, setQuery] = useState(''); // Search query
-    const [isLoading, setIsLoading] = useState(false); // Track loading state
-    const [errorMessage, setErrorMessage] = useState(''); // Track error message
+    const [totalPages, setTotalPages] = useState(1); // Total pages
+    const [isLoading, setIsLoading] = useState(false); // Loading state
+    const [error, setError] = useState(''); // Error message
+    const moviesPerPage = 12; // Number of movies to display per page
 
-    const handleSearch = async (searchQuery) => {
-        setQuery(searchQuery);
-        setIsLoading(true); // Set loading to true when starting the fetch
-        setErrorMessage(''); // Clear any previous error messages
+    useEffect(() => {
+        loadPopularMovies();
+    }, []);
 
+    // Fetch popular movies (10 pages)
+    const loadPopularMovies = async () => {
+        setIsLoading(true);
+        setError('');
         try {
-            const data = await fetchMovies(searchQuery, currentPage);
-            if (data.results.length === 0) {
-                setErrorMessage('No movies found.');
+            let allMovies = [];
+            for (let page = 1; page <= 10; page++) {
+                const data = await fetchPopularMovies(page);
+                allMovies = [...allMovies, ...data.results];
             }
-            setMovies(data.results);
-            setTotalPages(data.total_pages);
+            setMovies(allMovies);
+            setTotalPages(Math.ceil(allMovies.length / moviesPerPage)); // Calculate total pages
         } catch (error) {
-            console.error('Error fetching movies:', error);
-            setErrorMessage('An error occurred while fetching the movies.');
+            console.error('Error loading popular movies:', error);
+            setError('Failed to load movies. Please try again.');
         } finally {
-            setIsLoading(false); // Set loading to false once fetch is complete
+            setIsLoading(false);
         }
     };
 
-    const handlePageChange = async (newPage) => {
-        setCurrentPage(newPage);
-        setIsLoading(true); // Set loading to true when starting the fetch
-        setErrorMessage(''); // Clear any previous error messages
-
+    // Handle search
+    const handleSearch = async (query) => {
+        setIsLoading(true);
+        setError('');
         try {
-            const data = await fetchMovies(query, newPage);
+            const data = await searchMovies(query);
             setMovies(data.results);
+            setTotalPages(Math.ceil(data.results.length / moviesPerPage)); // Calculate total pages
+            setCurrentPage(1); // Reset to first page after search
         } catch (error) {
-            console.error('Error fetching movies:', error);
-            setErrorMessage('An error occurred while fetching the movies.');
+            console.error('Error searching movies:', error);
+            setError('Failed to search movies. Please try again.');
         } finally {
-            setIsLoading(false); // Set loading to false once fetch is complete
+            setIsLoading(false);
         }
+    };
+
+    // Get movies for the current page
+    const getMoviesForCurrentPage = () => {
+        const startIndex = (currentPage - 1) * moviesPerPage;
+        const endIndex = startIndex + moviesPerPage;
+        return movies.slice(startIndex, endIndex);
     };
 
     return (
-        <div className="home-page">
-            <h1>Movie Database</h1>
-            <SearchBar setMovies={handleSearch} />
-            
-            {/* Show loading spinner while fetching data */}
-            {isLoading && <div className="spinner"></div>}
-
-            {/* Show error message if fetching fails */}
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-            
-            {/* Display the list of movies */}
-            <div className="movie-list">
-                {movies.length > 0 ? (
-                    movies.map((movie) => (
-                        <div key={movie.id} className="movie-card">
-                            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-                            <h3>{movie.title}</h3>
-                        </div>
-                    ))
-                ) : (
-                    <p>No movies found</p>
-                )}
-            </div>
-            
-            {/* Pagination controls */}
-            {movies.length > 0 && (
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                />
+        <div>
+            <SearchBar onSearch={handleSearch} />
+            {isLoading ? (
+                <div className="loading-spinner">Loading...</div>
+            ) : error ? (
+                <div className="error-message">{error}</div>
+            ) : (
+                <>
+                    <MovieList movies={getMoviesForCurrentPage()} />
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
+                </>
             )}
         </div>
     );

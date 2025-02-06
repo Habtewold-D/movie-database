@@ -1,25 +1,20 @@
-// src/components/SearchBar.js
 import React, { useState } from 'react';
-import { fetchMovies } from '../services/api';
 
-const SearchBar = ({ setMovies }) => {
+const SearchBar = ({ onSearch }) => {
     const [query, setQuery] = useState('');
 
-    const handleSearch = async (e) => {
+    const handleSearch = (e) => {
         e.preventDefault();
-        if (query.trim()) {
-            const data = await fetchMovies(query);
-            setMovies(data.results); // Pass results to parent component
-        }
+        onSearch(query);
     };
 
     return (
         <form onSubmit={handleSearch} className="search-bar">
             <input
                 type="text"
-                placeholder="Search for a movie..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search for movies..."
             />
             <button type="submit">Search</button>
         </form>

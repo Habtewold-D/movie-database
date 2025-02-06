@@ -1,25 +1,243 @@
-/* src/App.css */
 body {
-  background-color: #121212;
-  color: #e0e0e0;
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-button {
-  background-color: #6200ee;
-  color: white;
-  padding: 10px 20px;
+.search-bar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  padding: 8px;
+  width: 300px;
+  border-radius: 4px;
+  border: 1px solid #444; /* Darker border for dark theme */
+  margin-right: 8px;
+  background-color: #333; /* Dark gray input background */
+  color: #fff; /* White text for input */
+}
+
+.search-bar button {
+  padding: 8px 16px;
+  border-radius: 4px;
   border: none;
+  background-color: #007bff; /* Blue button */
+  color: #fff;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #3700b3;
+.search-bar button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
-input {
-  padding: 10px;
-  background-color: #333;
-  border: 1px solid #444;
-  color: white;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  margin: 0 4px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff; /* Blue button */
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #0056b3; /* Darker blue for active page */
+}
+
+.pagination button:disabled {
+  background-color: #555; /* Gray for disabled button */
+  cursor: not-allowed;
+}
+
+.login-page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1e1e1e; /* Dark gray background */
+  border-radius: 8px;
+  text-align: center;
+}
+
+.login-page input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  border: 1px solid #444; /* Darker border for dark theme */
+  background-color: #333; /* Dark gray input background */
+  color: #fff; /* White text for input */
+}
+
+.login-page button {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff; /* Blue button */
+  color: #fff;
+  cursor: pointer;
+}
+
+.login-page button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.login-page p {
+  margin-top: 12px;
+  color: #ccc; /* Light gray text */
+}
+
+.login-page p button {
+  background: none;
+  border: none;
+  color: #007bff; /* Blue text for link */
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; /* Add gap between movies */
+  padding: 16px;
+}
+
+.movie-card {
+  background-color: #1e1e1e; /* Dark gray for movie cards */
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.movie-info {
+  margin-top: 12px;
+}
+
+.movie-info h3 {
+  font-size: 18px;
+  margin: 8px 0;
+  color: #fff; /* White text for movie title */
+}
+
+.movie-info p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #ccc; /* Light gray text for details */
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 18px;
+  color: #007bff; /* Blue loading text */
+}
+
+.error-message {
+  color: #ff4d4d; /* Red error text */
+  text-align: center;
+  margin: 20px 0;
+}
+
+.comment-form {
+  margin-top: 20px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  border: 1px solid #444; /* Darker border for dark theme */
+  background-color: #333; /* Dark gray input background */
+  color: #fff; /* White text for input */
+}
+
+.comment-form button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff; /* Blue button */
+  color: #fff;
+  cursor: pointer;
+}
+
+.comment-form button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+.navbar {
+  background-color: #1e1e1e; /* Dark gray background */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #444; /* Darker border */
+}
+
+.navbar-link {
+  color: #fff; /* White text */
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.navbar-link:hover {
+  color: #007bff; /* Blue text on hover */
+}
+.error-message {
+  color: #ff4d4d; /* Red error text */
+  text-align: center;
+  margin: 10px 0;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e1e1e; /* Dark background */
+  color: #fff; /* White text */
+  border-bottom: 1px solid #444; /* Darker border */
+}
+
+.navbar-left, .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between items */
+}
+
+.navbar-link {
+  color: #fff; /* White text */
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.navbar-link:hover {
+  color: #007bff; /* Blue text on hover */
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff; /* Blue logo text */
 }

@@ -32,6 +32,27 @@ exports.addFavorite = async (req, res) => {
     }
 };
 
+// Remove movie from favorites
+exports.removeFavorite = async (req, res) => {
+    const { user_id, movie_id } = req.body;
+
+    try {
+        const favorite = await Favorite.findOne({
+            where: { user_id, movie_id }
+        });
+
+        if (!favorite) {
+            return res.status(404).json({ message: 'Favorite not found' });
+        }
+
+        await favorite.destroy();
+        res.status(200).json({ message: 'Favorite removed successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to remove favorite' });
+    }
+};
+
 // Get user’s favorite movies
 exports.getFavorites = async (req, res) => {
     const userId = req.params.user_id;

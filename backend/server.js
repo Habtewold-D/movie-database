@@ -17,11 +17,19 @@ const Favorite = require('./models/Favorite');
 const Watchlist = require('./models/Watchlist');
 const Comment = require('./models/Comment');
 
+// Import middlewares
+const authenticateToken = require('./middlewares/authMiddleware');  // For JWT Authentication
+const errorHandler = require('./middlewares/errorMiddleware');  // For Error Handling
+const syncDatabase = require('./config/syncDatabase');  // To Sync Database Models
+
 const app = express();
 
 // Middleware
 app.use(cors());  // Enable CORS (Cross-Origin Resource Sharing)
 app.use(bodyParser.json());  // Parse JSON bodies
+
+// Sync Sequelize models with the database (including new models)
+syncDatabase();  // Synchronize database models
 
 // Test the database connection
 sequelize.authenticate()
@@ -32,21 +40,15 @@ sequelize.authenticate()
         console.error('Unable to connect to the database:', error);
     });
 
-// Sync Sequelize models with the database (including new models)
-sequelize.sync({ force: false })  // Set force: false to prevent data loss
-    .then(() => {
-        console.log("Database synced successfully");
-    })
-    .catch((error) => {
-        console.error("Error syncing the database:", error);
-    });
-
 // Routes
 app.use('/api/auth', userRoutes);  // Define routes for user authentication
 app.use('/api/movies', movieRoutes);  // Use the movie routes for movie-related API
 app.use('/api/favorites', favoriteRoutes);  // Define routes for movie favorites
 app.use('/api/watchlist', watchlistRoutes);  // Define routes for movie watchlist
 app.use('/api/comments', commentRoutes);  // Define routes for movie comments
+
+// Error Handling Middleware
+app.use(errorHandler);  // This should be last, catching any unhandled errors
 
 // Start the server
 const PORT = process.env.PORT || 5000;
