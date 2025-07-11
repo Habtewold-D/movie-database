@@ -4,12 +4,14 @@ const User = require('../models/User');
 
 // User Registration
 exports.register = async (req, res) => {
-    const { username, email, password } = req.body;
+    let { username, email, password } = req.body;
 
     // Input validation
     if (!username || !email || !password) {
         return res.status(400).json({ message: 'Please provide all required fields.' });
     }
+
+    email = email.toLowerCase();
 
     try {
         const userExists = await User.findOne({ email });
@@ -18,7 +20,7 @@ exports.register = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({
+        await User.create({
             username,
             email,
             password_hash: hashedPassword  // Correct field name
@@ -33,7 +35,8 @@ exports.register = async (req, res) => {
 
 // User Login
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    email = email.toLowerCase();
 
     try {
         const user = await User.findOne({ email });
