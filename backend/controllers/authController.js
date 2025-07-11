@@ -12,7 +12,7 @@ exports.register = async (req, res) => {
     }
 
     try {
-        const userExists = await User.findOne({ where: { email } });
+        const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: 'User already exists' });
         }
@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign(
-            { userId: user.id, username: user.username },
+            { userId: user._id, username: user.username },
             process.env.JWT_SECRET, // You need to add this in your .env file
             { expiresIn: '1h' }  // Token expires in 1 hour
         );

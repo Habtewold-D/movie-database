@@ -7,8 +7,8 @@ exports.addComment = async (req, res) => {
     const { user_id, movie_id, comment } = req.body;
 
     // Check if movie and user exist
-    const user = await User.findByPk(user_id);
-    const movie = await Movie.findByPk(movie_id);
+    const user = await User.findById(user_id);
+    const movie = await Movie.findById(movie_id);
 
     if (!user || !movie) {
         return res.status(400).json({ message: 'User or Movie not found' });
@@ -27,7 +27,7 @@ exports.addComment = async (req, res) => {
 exports.getComments = async (req, res) => {
     const movieId = req.params.movie_id;
     try {
-        const comments = await Comment.findAll({ where: { movie_id: movieId } });
+        const comments = await Comment.find({ movie_id: movieId });
         res.json(comments);
     } catch (err) {
         console.error(err);
