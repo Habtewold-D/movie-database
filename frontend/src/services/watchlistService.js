@@ -6,14 +6,22 @@ export const getWatchlist = async (userId) => {
     return response.data;
 };
 
-export const addToWatchlist = async (userId, tmdbId) => {
-    const response = await axios.post(`${API_BASE_URL}/watchlist`, { user_id: userId, tmdb_id: tmdbId });
+export const addToWatchlist = async (userId, tmdbId, token) => {
+    const response = await axios.post(
+        `${API_BASE_URL}/watchlist`,
+        { user_id: userId, tmdb_id: tmdbId },
+        { headers: { Authorization: `Bearer ${token}` } }
+    );
     return response.data;
 };
 
-export const removeFromWatchlist = async (userId, movieId) => {
-    const response = await axios.delete(`${API_BASE_URL}/watchlist`, {
-        data: { user_id: userId, movie_id: movieId }
-    });
+export const removeFromWatchlist = async (userId, movieId, token) => {
+    const response = await axios.delete(
+        `${API_BASE_URL}/watchlist`,
+        {
+            data: { user_id: userId, movie_id: movieId },
+            headers: { Authorization: `Bearer ${token}` }
+        }
+    );
     return response.data;
 }; 

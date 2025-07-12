@@ -32,13 +32,15 @@ const Favorites = () => {
         loadFavorites();
     }, [user, isAuthenticated]);
 
-    // Map favorites to movie objects for MovieList, ensuring rating and formatted date
+    // Map favorites to movie objects for MovieList, ensuring rating, formatted date, and correct id/tmdb_id
     const favoriteMovies = favorites.map(fav => {
         const movie = fav.movie_id;
         return {
             ...movie,
             vote_average: movie.vote_average || movie.rating || '',
             release_date: movie.release_date ? movie.release_date.slice(0, 10) : '',
+            tmdb_id: movie.tmdb_id,
+            id: movie.tmdb_id, // for routing
         };
     });
 

@@ -4,9 +4,13 @@ const CommentList = ({ comments }) => {
     return (
         <div className="comment-list">
             {comments.map((comment) => (
-                <div key={comment.id} className="comment">
+                <div key={comment._id || comment.id} className="comment">
                     <p>{comment.comment}</p>
-                    <small>By: {comment.user_id} • {new Date(comment.createdAt).toLocaleString()}</small>
+                    <small>
+                        By: {comment.user_id && typeof comment.user_id === 'object' ? (comment.user_id.username || comment.user_id.email) : comment.user_id}
+                        {' • '}
+                        {comment.createdAt ? new Date(comment.createdAt).toLocaleString() : ''}
+                    </small>
                 </div>
             ))}
         </div>

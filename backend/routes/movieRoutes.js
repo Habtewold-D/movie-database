@@ -5,6 +5,8 @@ const router = express.Router();
 const MOVIE_API_KEY = process.env.MOVIE_DATABASE_API_KEY;
 const MOVIE_API_URL = process.env.MOVIE_DATABASE_API_URL;
 
+const Movie = require('../models/Movie');
+
 // Fetch popular movies from TMDB
 router.get('/movies', async (req, res) => {
     try {
@@ -45,6 +47,19 @@ router.get('/search', async (req, res) => {
     } catch (error) {
         console.error('Error searching movies:', error);
         res.status(500).json({ error: 'Failed to search movies' });
+    }
+});
+
+// Fetch a movie by TMDB ID from local DB
+router.get('/tmdb/:tmdb_id', async (req, res) => {
+    const tmdbId = Number(req.params.tmdb_id);
+    if (!tmdbId) return res.status(400).json({ message: 'Invalid TMDB ID' });
+    try {
+        const movie = await Movie.findOne({ tmdb_id: tmdbId });
+        if (!movie) return res.status(404).json({ message: 'Movie not found' });
+        res.json(movie);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch movie' });
     }
 });
 

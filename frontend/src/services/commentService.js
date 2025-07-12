@@ -6,7 +6,11 @@ export const getComments = async (movieId) => {
     return response.data;
 };
 
-export const addComment = async (userId, tmdbId, comment) => {
-    const response = await axios.post(`${API_BASE_URL}/comments`, { user_id: userId, tmdb_id: tmdbId, comment });
+export const addComment = async (userId, tmdbId, comment, token) => {
+    const response = await axios.post(
+        `${API_BASE_URL}/comments`,
+        { user_id: userId, tmdb_id: tmdbId, comment },
+        { headers: { Authorization: `Bearer ${token}` } }
+    );
     return response.data;
 }; 
