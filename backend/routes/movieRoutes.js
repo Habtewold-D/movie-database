@@ -17,7 +17,7 @@ router.get('/movies', async (req, res) => {
         });
 
         const movies = response.data.results;
-        res.json(movies);
+        res.json({ results: movies }); // Return as { results: [...] }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to fetch movies' });
