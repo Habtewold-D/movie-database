@@ -16,7 +16,7 @@ const MovieCard = ({ movie }) => {
                 <h3>{movie.title}</h3>
                 <p>{movie.release_date}</p>
                 <p>Rating: {movie.vote_average}</p>
-                <FavoriteIcon movieId={movie.id} />
+                <FavoriteIcon movieId={movie.tmdb_id || movie.id} />
             </div>
         </div>
     );

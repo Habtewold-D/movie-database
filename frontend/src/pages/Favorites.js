@@ -5,27 +5,53 @@ import MovieList from '../components/MovieList';
 
 const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
     const { user, isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
         const loadFavorites = async () => {
-            if (isAuthenticated() && user?.id) {
+            setIsLoading(true);
+            setError('');
+            if (isAuthenticated() && user?._id) {
                 try {
-                    const data = await getFavorites(user.id);
+                    const data = await getFavorites(user._id);
                     setFavorites(data);
                 } catch (error) {
-                    console.error('Error fetching favorites:', error);
+                    setError('Failed to load favorites.');
+                    setFavorites([]);
+                } finally {
+                    setIsLoading(false);
                 }
+            } else {
+                setFavorites([]);
+                setIsLoading(false);
             }
         };
 
         loadFavorites();
     }, [user, isAuthenticated]);
 
+    // Map favorites to movie objects for MovieList, ensuring rating and formatted date
+    const favoriteMovies = favorites.map(fav => {
+        const movie = fav.movie_id;
+        return {
+            ...movie,
+            vote_average: movie.vote_average || movie.rating || '',
+            release_date: movie.release_date ? movie.release_date.slice(0, 10) : '',
+        };
+    });
+
     return (
         <div className="favorites-page">
             <h1>Your Favorites</h1>
-            <MovieList movies={favorites} />
+            {isLoading ? (
+                <div className="loading-spinner">Loading...</div>
+            ) : error ? (
+                <div className="error-message">{error}</div>
+            ) : (
+                <MovieList movies={favoriteMovies} />
+            )}
         </div>
     );
 };
