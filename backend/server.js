@@ -9,6 +9,7 @@ const movieRoutes = require('./routes/movieRoutes');  // Import movie routes
 const favoriteRoutes = require('./routes/favoriteRoutes');  // Import favorite movie routes
 const watchlistRoutes = require('./routes/watchlistRoutes');  // Import watchlist routes
 const commentRoutes = require('./routes/commentRoutes');  // Import comment routes
+const chatbotRoutes = require('./routes/chatbotRoutes');
 
 // Import all the models (Mongoose will register them)
 require('./models/User');
@@ -36,6 +37,7 @@ app.use('/api/movies', movieRoutes);  // Use the movie routes for movie-related 
 app.use('/api/favorites', favoriteRoutes);  // Define routes for movie favorites
 app.use('/api/watchlist', watchlistRoutes);  // Define routes for movie watchlist
 app.use('/api/comments', commentRoutes);  // Define routes for movie comments
+app.use('/api/chatbot', chatbotRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);  // This should be last, catching any unhandled errors

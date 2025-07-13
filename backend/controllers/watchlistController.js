@@ -42,18 +42,18 @@ exports.addToWatchlist = async (req, res) => {
             });
         } catch (err) {
             return res.status(500).json({ message: 'Failed to fetch movie from TMDB' });
-        }
+    }
     }
 
     // Check if already in watchlist
     const existingWatchlist = await Watchlist.findOne({ user_id, movie_id: movie._id });
-    if (existingWatchlist) {
-        return res.status(400).json({ message: 'Movie already in watchlist' });
-    }
+        if (existingWatchlist) {
+            return res.status(400).json({ message: 'Movie already in watchlist' });
+        }
 
     // Add to watchlist
     const watchlistItem = await Watchlist.create({ user_id, movie_id: movie._id });
-    res.status(201).json(watchlistItem);
+        res.status(201).json(watchlistItem);
 };
 
 // Remove movie from watchlist

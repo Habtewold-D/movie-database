@@ -42,18 +42,18 @@ exports.addFavorite = async (req, res) => {
             });
         } catch (err) {
             return res.status(500).json({ message: 'Failed to fetch movie from TMDB' });
-        }
+    }
     }
 
     // Check if already in favorites
     const existingFavorite = await Favorite.findOne({ user_id, movie_id: movie._id });
-    if (existingFavorite) {
-        return res.status(400).json({ message: 'Movie already in favorites' });
-    }
+        if (existingFavorite) {
+            return res.status(400).json({ message: 'Movie already in favorites' });
+        }
 
     // Add to favorites
     const favorite = await Favorite.create({ user_id, movie_id: movie._id });
-    res.status(201).json(favorite);
+        res.status(201).json(favorite);
 };
 
 // Remove movie from favorites

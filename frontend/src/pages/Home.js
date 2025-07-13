@@ -3,6 +3,7 @@ import { fetchPopularMovies, searchMovies } from '../services/movieService';
 import SearchBar from '../components/SearchBar';
 import MovieList from '../components/MovieList';
 import Pagination from '../components/Pagination';
+import Chatbot from '../components/Chatbot';
 
 const Home = () => {
     const [movies, setMovies] = useState([]); // All movies fetched
@@ -59,22 +60,27 @@ const Home = () => {
     };
 
     return (
-        <div>
-            <SearchBar onSearch={handleSearch} />
-            {isLoading ? (
-                <div className="loading-spinner">Loading...</div>
-            ) : error ? (
-                <div className="error-message">{error}</div>
-            ) : (
-                <>
-                    <MovieList movies={getMoviesForCurrentPage()} />
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={setCurrentPage}
-                    />
-                </>
-            )}
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 32 }}>
+            <div style={{ flex: 1 }}>
+                <SearchBar onSearch={handleSearch} />
+                {isLoading ? (
+                    <div className="loading-spinner">Loading...</div>
+                ) : error ? (
+                    <div className="error-message">{error}</div>
+                ) : (
+                    <>
+                        <MovieList movies={getMoviesForCurrentPage()} />
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                        />
+                    </>
+                )}
+            </div>
+            <div style={{ minWidth: 340, maxWidth: 380 }}>
+                <Chatbot />
+            </div>
         </div>
     );
 };
