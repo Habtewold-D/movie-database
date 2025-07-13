@@ -52,7 +52,7 @@ const Favorites = () => {
             ) : error ? (
                 <div className="error-message">{error}</div>
             ) : (
-                <MovieList movies={favoriteMovies} />
+                <MovieList movies={favoriteMovies} iconType="favorite" />
             )}
         </div>
     );

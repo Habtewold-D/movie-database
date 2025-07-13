@@ -37,7 +37,7 @@ const Watchlist = () => {
     return (
         <div className="watchlist-page">
             <h1>Your Watchlist</h1>
-            <MovieList movies={watchlistMovies} />
+            <MovieList movies={watchlistMovies} iconType="watchlist" />
         </div>
     );
 };

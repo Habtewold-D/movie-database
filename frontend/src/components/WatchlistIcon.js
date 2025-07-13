@@ -58,12 +58,20 @@ const WatchlistIcon = ({ movieId }) => {
         <button
             onClick={handleWatchlist}
             className="watchlist-icon"
-            style={{ color: isInWatchlist ? '#1976d2' : '#888', fontSize: '1.5em', background: 'none', border: 'none', cursor: 'pointer', marginLeft: '0.5em' }}
+            style={{
+                color: isInWatchlist ? 'green' : '#888',
+                fontSize: '1.5em',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                marginLeft: '0.5em',
+                transition: 'color 0.2s',
+            }}
             aria-label={isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
             disabled={loading}
             title={isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
         >
-            {isInWatchlist ? '📑' : '🔖'}
+            {isInWatchlist ? '✔️' : '➕'}
         </button>
     );
 };

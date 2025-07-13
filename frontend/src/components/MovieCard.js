@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import FavoriteIcon from './FavoriteIcon';
 import WatchlistIcon from './WatchlistIcon';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, iconType }) => {
     const movieId = movie.tmdb_id || movie.id;
     return (
         <div className="movie-card">
@@ -19,8 +19,8 @@ const MovieCard = ({ movie }) => {
                 <p>{movie.release_date}</p>
                 <p>Rating: {movie.vote_average}</p>
                 <div style={{ display: 'flex', gap: '0.75em', alignItems: 'center', marginTop: '0.5em', justifyContent: 'center', width: '100%' }}>
-                    <FavoriteIcon movieId={movieId} />
-                    <WatchlistIcon movieId={movieId} />
+                    {(!iconType || iconType === 'favorite') && <FavoriteIcon movieId={movieId} />}
+                    {(!iconType || iconType === 'watchlist') && <WatchlistIcon movieId={movieId} />}
                 </div>
             </div>
         </div>
