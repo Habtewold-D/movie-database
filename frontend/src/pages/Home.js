@@ -60,27 +60,23 @@ const Home = () => {
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 32 }}>
-            <div style={{ flex: 1 }}>
-                <SearchBar onSearch={handleSearch} />
-                {isLoading ? (
-                    <div className="loading-spinner">Loading...</div>
-                ) : error ? (
-                    <div className="error-message">{error}</div>
-                ) : (
-                    <>
-                        <MovieList movies={getMoviesForCurrentPage()} />
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                        />
-                    </>
-                )}
-            </div>
-            <div style={{ minWidth: 340, maxWidth: 380 }}>
-                <Chatbot />
-            </div>
+        <div>
+            <SearchBar onSearch={handleSearch} />
+            {isLoading ? (
+                <div className="loading-spinner">Loading...</div>
+            ) : error ? (
+                <div className="error-message">{error}</div>
+            ) : (
+                <>
+                    <MovieList movies={getMoviesForCurrentPage()} />
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
+                </>
+            )}
+            <Chatbot />
         </div>
     );
 };

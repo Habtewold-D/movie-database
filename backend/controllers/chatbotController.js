@@ -6,7 +6,7 @@ exports.recommend = async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'google/gemini-2.0-flash-exp:free', // Use free Gemini 2.0 Flash Experimental model
+        model: 'deepseek/deepseek-chat-v3-0324:free', // Use free DeepSeek V3 0324 model
         messages: [
           { role: 'system', content: 'You are a helpful movie recommendation assistant.' },
           { role: 'user', content: message }
