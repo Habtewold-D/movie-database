@@ -4,6 +4,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .search-bar {
@@ -108,17 +109,22 @@ body {
 
 .movie-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px; /* Add gap between movies */
-  padding: 16px;
+  grid-template-columns: repeat(6, minmax(0, 1fr)); /* Responsive 6 columns */
+  gap: 24px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .movie-card {
-  background-color: #1e1e1e; /* Dark gray for movie cards */
-  border-radius: 8px;
-  padding: 16px;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 24px;
   text-align: center;
   transition: transform 0.2s;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .movie-card:hover {
@@ -127,7 +133,9 @@ body {
 
 .movie-poster {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 12px;
+  max-height: 340px;
+  object-fit: cover;
 }
 
 .movie-info {
