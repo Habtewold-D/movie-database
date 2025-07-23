@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addToWatchlist, removeFromWatchlist, getWatchlist } from '../services/api';
+import { getWatchlist, addToWatchlist, removeFromWatchlist } from '../services/watchlistService';
 import AuthContext from '../context/AuthContext';
 
 const WatchlistIcon = ({ movieId }) => {

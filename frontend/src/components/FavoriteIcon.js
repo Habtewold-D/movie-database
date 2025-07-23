@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addFavorite, removeFavorite, getFavorites } from '../services/api';
+import { getFavorites, addFavorite, removeFavorite } from '../services/favoriteService';
 import AuthContext from '../context/AuthContext';
 
 const FavoriteIcon = ({ movieId }) => {

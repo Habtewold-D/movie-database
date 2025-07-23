@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchPopularMovies, searchMovies } from '../services/api';
+import { fetchPopularMovies, searchMovies } from '../services/movieService';
 import SearchBar from '../components/SearchBar';
 import MovieList from '../components/MovieList';
 import Pagination from '../components/Pagination';

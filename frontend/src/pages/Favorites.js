@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { getFavorites } from '../services/api';
+import React, { useEffect, useState, useContext } from 'react';
+import { getFavorites } from '../services/favoriteService';
 import AuthContext from '../context/AuthContext';
 import MovieList from '../components/MovieList';
 

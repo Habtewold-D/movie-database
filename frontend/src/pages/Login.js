@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
+import { registerUser } from '../services/authService';
 
 const Login = () => {
     const [isLogin, setIsLogin] = useState(true); // Toggle between login and register
@@ -20,7 +21,8 @@ const Login = () => {
                 await login({ email, password }); // Call login from AuthContext
                 navigate('/'); // Redirect to home after login
             } else {
-                // Handle registration (if needed)
+                // Handle registration
+                await registerUser({ username, email, password });
                 setIsLogin(true); // Switch to login form after registration
             }
         } catch (error) {

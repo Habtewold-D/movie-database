@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { getWatchlist } from '../services/api';
+import React, { useEffect, useState, useContext } from 'react';
+import { getWatchlist } from '../services/watchlistService';
 import AuthContext from '../context/AuthContext';
 import MovieList from '../components/MovieList';
 

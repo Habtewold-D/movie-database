@@ -56,7 +56,10 @@ exports.login = async (req, res) => {
             { expiresIn: '1h' }  // Token expires in 1 hour
         );
 
-        res.json({ token });
+        // Exclude password_hash from user info
+        const { password_hash, ...userInfo } = user.toObject();
+
+        res.json({ token, user: userInfo });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error logging in' });

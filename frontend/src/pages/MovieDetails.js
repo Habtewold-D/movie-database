@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchMovieDetails, getComments, addComment } from '../services/api';
+import { fetchMovieDetails } from '../services/movieService';
+import { getComments, addComment } from '../services/commentService';
 import CommentForm from '../components/CommentForm';
 import CommentList from '../components/CommentList';
 import FavoriteIcon from '../components/FavoriteIcon';
