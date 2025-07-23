@@ -1,27 +1,11 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');  // Import sequelize instance
+const mongoose = require('mongoose');
 
-const Movie = sequelize.define('Movie', {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    overview: {
-        type: DataTypes.TEXT,
-        allowNull: true
-    },
-    release_date: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
-    poster_path: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    rating: {
-        type: DataTypes.DECIMAL,
-        allowNull: true
-    }
-});
+const movieSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  overview: { type: String },
+  release_date: { type: Date },
+  poster_path: { type: String },
+  rating: { type: Number },
+}, { timestamps: true });
 
-module.exports = Movie;
+module.exports = mongoose.model('Movie', movieSchema);

@@ -1,29 +1,9 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./User');
-const Movie = require('./Movie');
+const mongoose = require('mongoose');
 
-const Comment = sequelize.define('Comment', {
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: User,
-            key: 'id'
-        }
-    },
-    movie_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Movie,
-            key: 'id'
-        }
-    },
-    comment: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    }
-});
+const commentSchema = new mongoose.Schema({
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  movie_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
+  comment: { type: String, required: true },
+}, { timestamps: true });
 
-module.exports = Comment;
+module.exports = mongoose.model('Comment', commentSchema);

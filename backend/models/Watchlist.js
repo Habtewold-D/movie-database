@@ -1,25 +1,8 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./User');
-const Movie = require('./Movie');
+const mongoose = require('mongoose');
 
-const Watchlist = sequelize.define('Watchlist', {
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: User,
-            key: 'id'
-        }
-    },
-    movie_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Movie,
-            key: 'id'
-        }
-    }
-});
+const watchlistSchema = new mongoose.Schema({
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  movie_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
+}, { timestamps: true });
 
-module.exports = Watchlist;
+module.exports = mongoose.model('Watchlist', watchlistSchema);

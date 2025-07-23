@@ -1,7 +1,7 @@
 require('dotenv').config();  // Load environment variables
 
 const express = require('express');
-const sequelize = require('./config/database');  // Import sequelize instance
+const connectDB = require('./config/database');  // Import Mongoose connection
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/authRoutes');  // Import routes for user authentication
@@ -10,35 +10,25 @@ const favoriteRoutes = require('./routes/favoriteRoutes');  // Import favorite m
 const watchlistRoutes = require('./routes/watchlistRoutes');  // Import watchlist routes
 const commentRoutes = require('./routes/commentRoutes');  // Import comment routes
 
-// Import all the models
-const User = require('./models/User');
-const Movie = require('./models/Movie');
-const Favorite = require('./models/Favorite');
-const Watchlist = require('./models/Watchlist');
-const Comment = require('./models/Comment');
+// Import all the models (Mongoose will register them)
+require('./models/User');
+require('./models/Movie');
+require('./models/Favorite');
+require('./models/Watchlist');
+require('./models/Comment');
 
 // Import middlewares
 const authenticateToken = require('./middlewares/authMiddleware');  // For JWT Authentication
 const errorHandler = require('./middlewares/errorMiddleware');  // For Error Handling
-const syncDatabase = require('./config/syncDatabase');  // To Sync Database Models
 
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(cors());  // Enable CORS (Cross-Origin Resource Sharing)
 app.use(bodyParser.json());  // Parse JSON bodies
-
-// Sync Sequelize models with the database (including new models)
-syncDatabase();  // Synchronize database models
-
-// Test the database connection
-sequelize.authenticate()
-    .then(() => {
-        console.log('Database connected successfully');
-    })
-    .catch((error) => {
-        console.error('Unable to connect to the database:', error);
-    });
 
 // Routes
 app.use('/api/auth', userRoutes);  // Define routes for user authentication

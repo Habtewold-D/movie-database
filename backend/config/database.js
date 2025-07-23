@@ -1,15 +1,16 @@
-const { Sequelize } = require('sequelize');
+const mongoose = require('mongoose');
 
-// Sequelize configuration
-const sequelize = new Sequelize(
-    process.env.DB_NAME,     // Database name
-    process.env.DB_USER,     // User
-    process.env.DB_PASSWORD, // Password
-    {
-        host: process.env.DB_HOST,  // Database host (e.g., localhost)
-        dialect: process.env.DB_DIALECT, // Dialect for the database
-        logging: false,             // Optionally disable SQL logging
-    }
-);
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  }
+};
 
-module.exports = sequelize;
+module.exports = connectDB;
