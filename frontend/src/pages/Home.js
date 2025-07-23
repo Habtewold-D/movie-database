@@ -21,13 +21,11 @@ const Home = () => {
         setIsLoading(true);
         setError('');
         try {
-            let allMovies = [];
-            for (let page = 1; page <= 10; page++) {
-                const data = await fetchPopularMovies(page);
-                allMovies = [...allMovies, ...data.results];
-            }
-            setMovies(allMovies);
-            setTotalPages(Math.ceil(allMovies.length / moviesPerPage)); // Calculate total pages
+            // Fetch only 1 page for fast loading
+            const data = await fetchPopularMovies(1);
+            setMovies(data.results);
+            setTotalPages(Math.ceil(data.results.length / moviesPerPage));
+            // To fetch more pages, use a loop or Promise.all for parallel requests
         } catch (error) {
             console.error('Error loading popular movies:', error);
             setError('Failed to load movies. Please try again.');

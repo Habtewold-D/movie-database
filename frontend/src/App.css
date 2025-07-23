@@ -109,11 +109,29 @@ body {
 
 .movie-list {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr)); /* Responsive 6 columns */
+  grid-template-columns: repeat(6, minmax(0, 1fr)); /* 6 cards per row on large screens */
   gap: 24px;
   padding: 24px;
   width: 100%;
   box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .movie-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* 4 on medium screens */
+  }
+}
+
+@media (max-width: 900px) {
+  .movie-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 on small screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-list {
+    grid-template-columns: 1fr; /* 1 on mobile */
+  }
 }
 
 .movie-card {
