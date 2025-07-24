@@ -10,6 +10,8 @@ const favoriteRoutes = require('./routes/favoriteRoutes');  // Import favorite m
 const watchlistRoutes = require('./routes/watchlistRoutes');  // Import watchlist routes
 const commentRoutes = require('./routes/commentRoutes');  // Import comment routes
 const chatbotRoutes = require('./routes/chatbotRoutes');
+const passport = require('passport');
+require('./config/passport');
 
 // Import all the models (Mongoose will register them)
 require('./models/User');
