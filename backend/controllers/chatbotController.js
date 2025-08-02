@@ -26,3 +26,4 @@ exports.recommend = async (req, res) => {
     res.status(500).json({ error: 'Failed to get recommendation.' });
   }
 };
+ 

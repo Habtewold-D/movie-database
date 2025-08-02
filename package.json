@@ -1,0 +1,13 @@
+{
+  "name": "movie-database",
+  "version": "1.0.0",
+  "description": "Movie database application with frontend and backend",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "build": "cd backend && npm install",
+    "dev": "cd backend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+} 
